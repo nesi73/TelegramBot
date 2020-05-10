@@ -19,10 +19,6 @@ def start(bot, update):
   message = "Welcome to the coolest bot ever!"
   bot.send_message(chat_id=update.message.chat_id, text=message)
 
-def hello(bot, update):
-  """ This function will be executed when '/hello' command is received """
-  greeting = "Hi there, {}".format(update.effective_user.username)
-  bot.send_message(chat_id=update.message.chat_id, text=greeting)
 def button(bot, update):
   query = update.callback_query
   f = open('pbSolucion.txt','r')
@@ -104,20 +100,11 @@ def mostrarTablero():
   upg.message.reply_text('Elige el servicio:',reply_markup=reply_markup)
   f.close()
 
-def info(bot, update):
+def play(bot, update):
   bot.send_message(chat_id=update.message.chat_id, text ="¿Serás capaz de derrotarme?")
   global upg
   upg = update
   mostrarTablero()
-
-
-def add(bot, update, args):
-  """ This function will be executed when '/add arg1, arg2, ...' command is received """
-
-  # First converts the string list to a int list and then add all the elems
-  result = sum(map(int, args))
-  message = "The result is: {}".format(result)
-  bot.send_message(chat_id=update.message.chat_id, text=message)
 
 def main(bot_token):
   """ Main function of the bot """
@@ -126,15 +113,11 @@ def main(bot_token):
 
   # Command handlers
   start_handler = CommandHandler('start', start)
-  hello_handler = CommandHandler('hello', hello)
-  add_handler = CommandHandler('add', add, pass_args=True)
-  info2_handler = CommandHandler('info', info)
+  play_handler = CommandHandler('play', play)
 
   # Add the handlers to the bot
   dispatcher.add_handler(start_handler)
-  dispatcher.add_handler(hello_handler)
-  dispatcher.add_handler(add_handler)
-  dispatcher.add_handler(info2_handler)
+  dispatcher.add_handler(play_handler)
   dispatcher.add_handler(CallbackQueryHandler(button))
 
 
